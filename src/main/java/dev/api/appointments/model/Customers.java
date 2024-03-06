@@ -1,151 +1,92 @@
 package dev.api.appointments.model;
 
 
+import jakarta.persistence.*;
+
 /**
  * Customers class contains customerName, customerAddress, customerPostalCode, customerPhoneNumber, customerState, divisionID.
  * These values are necessary for the customer information and this class also contains setters and getters for functionality.
  */
-
+@Entity
+@Table
 public class Customers {
 
-    private String divisionName;
-    private int customerID;
-    private String customerName;
-    private String customerAddress;
-    private String customerPostalCode;
-    private String customerPhoneNumber;
-    //private int customerState;
-    private int divisionID;
+    @Id
+    @SequenceGenerator(
+            name = "customer_sequence",
+            sequenceName = "customer_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "customer_sequence"
+    )
+    private long customerId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
 
-    public Customers(int customerID, String customerName, String customerAddress, String customerPostalCode,
-                     String customerPhoneNumber, int divisionID, String divisionName) {
+    public Customers() {
+    }
 
-        this.customerID = customerID;
-        this.customerName = customerName;
-        this.customerAddress = customerAddress;
-        this.customerPostalCode = customerPostalCode;
-        this.customerPhoneNumber = customerPhoneNumber;
-        this.divisionID = divisionID;
-        this.divisionName = divisionName;
+    public Customers(int customerId, String firstName, String lastName, String email, String phoneNumber) {
+        this.customerId = customerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
 
-
-    /**
-     *
-     * @return customerID
-     */
-    public Integer getCustomerID() {
-
-        return customerID;
+    public long getCustomerId() {
+        return customerId;
     }
 
-    /**
-     *
-     * @param customerID
-     */
-    public void setCustomerID(Integer customerID) {
-
-        this.customerID = customerID;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
-    /**
-     *
-     * @return customerName
-     */
-    public String getCustomerName() {
-
-        return customerName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    /**
-     *
-     * @param customerName
-     */
-    public void setCustomerName(String customerName) {
-
-        this.customerName = customerName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    /**
-     *
-     * @return customerAddress
-     */
-    public String getCustomerAddress() {
-
-        return customerAddress;
+    public String getLastName() {
+        return lastName;
     }
 
-    /**
-     *
-     * @param address
-     */
-    public void setCustomerAddress(String address) {
-
-        this.customerAddress = address;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    /**
-     *
-     * @return customerPostalCode
-     */
-    public String getCustomerPostalCode() {
-
-        return customerPostalCode;
+    public String getEmail() {
+        return email;
     }
 
-    /**
-     *
-     * @param postalCode
-     */
-    public void setCustomerPostalCode(String postalCode) {
-
-        this.customerPostalCode = postalCode;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    /**
-     *
-     * @return customerPhoneNumber
-     */
-    public String getCustomerPhone() {
-
-        return customerPhoneNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    /**
-     *
-     * @param phone
-     */
-    public void setCustomerPhone(String phone) {
-
-        this.customerPhoneNumber = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    /**
-     *
-     * @return divisionID
-     */
-    public Integer getCustomerDivisionID() {
-
-        return divisionID;
+    @Override
+    public String toString() {
+        return "Customers{" +
+                "customerId=" + customerId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
-
-    /**
-     *
-     * @return divisionID
-     */
-    public String getDivisionName() {
-
-        return divisionName;
-    }
-
-    /**
-     *
-     * @param divisionID
-     */
-    public void setCustomerDivisionID(Integer divisionID) {
-
-        this.divisionID = divisionID;
-    }
-
 }
