@@ -1,10 +1,16 @@
 package dev.api.appointments.model;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table
-public class UserAccounts {
+public class UserAccounts implements UserDetails {
 
     @Id
     @SequenceGenerator(
@@ -19,7 +25,8 @@ public class UserAccounts {
     private long userId;
     private String username;
     private String password;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @ManyToOne
     @JoinColumn(name = "business_id")
     private Businesses business;
@@ -30,7 +37,13 @@ public class UserAccounts {
     public UserAccounts() {
     }
 
-    public UserAccounts(int userId, String username, String password, String role) {
+    public UserAccounts(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public UserAccounts(int userId, String username, String password, Role role) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -45,14 +58,18 @@ public class UserAccounts {
         this.userId = userId;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
+
+
 
     public void setUsername(String username) {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -62,11 +79,27 @@ public class UserAccounts {
     }
 
     public String getRole() {
-        return role;
+        return String.valueOf(role);
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Businesses getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Businesses business) {
+        this.business = business;
+    }
+
+    public Customers getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customers customer) {
+        this.customer = customer;
     }
 
     @Override
@@ -77,5 +110,30 @@ public class UserAccounts {
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 }

@@ -28,6 +28,15 @@ public class Businesses {
     public Businesses() {
     }
 
+    public Businesses(String name, String ownerName, String description, String address, String phoneNumber, String email) {
+        this.name = name;
+        this.ownerName = ownerName;
+        this.description = description;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
     public Businesses(long businessId, String name, String ownerName, String description, String address, String phoneNumber, String email) {
         this.businessId = businessId;
         this.name = name;

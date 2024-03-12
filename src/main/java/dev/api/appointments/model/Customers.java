@@ -3,10 +3,7 @@ package dev.api.appointments.model;
 
 import jakarta.persistence.*;
 
-/**
- * Customers class contains customerName, customerAddress, customerPostalCode, customerPhoneNumber, customerState, divisionID.
- * These values are necessary for the customer information and this class also contains setters and getters for functionality.
- */
+
 @Entity
 @Table
 public class Customers {
@@ -30,6 +27,13 @@ public class Customers {
     public Customers() {
     }
 
+    public Customers(String firstName, String lastName, String email, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
     public Customers(int customerId, String firstName, String lastName, String email, String phoneNumber) {
         this.customerId = customerId;
         this.firstName = firstName;
@@ -43,7 +47,7 @@ public class Customers {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(long customerId) {
         this.customerId = customerId;
     }
 
